@@ -42,4 +42,4 @@ jobs:
         run : pip install pytest
 
       - name: Test the app
-        run : pytest work.py -v
+        run : pytest test.py -v
