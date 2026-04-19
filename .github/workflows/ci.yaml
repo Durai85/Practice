@@ -1,0 +1,35 @@
+name: CI/CD pipeline
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Docker login
+      uses: docker/login-action@v3
+      with:
+        username: ${{DOCKER_USERNAME}}
+        password: ${{DOCKER_PASSWORD}}
+
+    - name: Build Docker image
+      run : docker build -t ${{DOCKER_USERNAME}}/todo-app:latest .
+
+    - name: Run Docker image
+      run : docker run -d ${{DOCKER_USERNAME}}/todo-app:latest
+
+    - name: Push to DOCKER hub
+      run : docker push ${{DOCKER_USERNAME}}/todo-app:latest
+  
+  app-test:
+    steps:
+      - name: Install requirements
+        run : pip install -r requirements.txt
+
+      - name: Test the app
+        run : pytest work.py -v
