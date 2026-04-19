@@ -18,15 +18,16 @@ jobs:
         password: ${{DOCKER_PASSWORD}}
 
     - name: Build Docker image
-      run : docker build -t ${{DOCKER_USERNAME}}/todo-app:latest .
+      run : docker build -t ${{secrets.DOCKER_USERNAME}}/todo-app:latest .
 
     - name: Run Docker image
-      run : docker run -d ${{DOCKER_USERNAME}}/todo-app:latest
+      run : docker run -d ${{secrets.DOCKER_USERNAME}}/todo-app:latest
 
     - name: Push to DOCKER hub
-      run : docker push ${{DOCKER_USERNAME}}/todo-app:latest
+      run : docker push ${{secrets.DOCKER_USERNAME}}/todo-app:latest
   
   app-test:
+    runs-on: ubuntu-latest
     steps:
       - name: Install requirements
         run : pip install -r requirements.txt
