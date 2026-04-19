@@ -27,10 +27,16 @@ jobs:
       run : docker push ${{secrets.DOCKER_USERNAME}}/todo-app:latest
   
   app-test:
+    needs: build-upload
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
 
       - name: Install requirements
         run : pip install pytest
