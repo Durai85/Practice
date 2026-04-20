@@ -25,10 +25,10 @@ jobs:
 
     steps: 
 
-      name: Checkout code
+    - name: Checkout code
       uses: actions/checkout@v3
 
-      name: Docker setup
+    - name: Docker setup
       uses: dokcer/login-action@v3
       with:
         username: ${{secrets.DOCKER_USERNAME}}
