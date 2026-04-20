@@ -19,4 +19,18 @@ jobs:
     - name: Run tests
       run : pytest test.py -v
       
+  build-deploy:
+    runs-on: ubuntu-latest
+    needs: test-app
+
+    steps: 
+
+      name: Checkout code
+      uses: actions/checkout@v3
+
+      name: Docker setup
+      uses: dokcer/login-action@v3
+      with:
+        username: ${{secrets.DOCKER_USERNAME}}
+        password: ${{secrets.DOCKER_PASSWORD}}
 
